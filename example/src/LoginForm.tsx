@@ -43,7 +43,7 @@ export default function LoginForm() {
           <div className="p-8">
             <div className="space-y-4">
               <button
-                className="btn-secondary btn-with-icon text-base flex justify-center px-3 py-4 w-full"
+                className="bg-black text-white  btn-secondary btn-with-icon text-base flex justify-center px-3 py-4 w-full"
                 onClick={signInWithGoogle}
               >
                 <FcGoogle className="h-6 w-6" />

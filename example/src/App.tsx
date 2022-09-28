@@ -33,14 +33,19 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1 className="font-bold underline text-6xl">Hello world!</h1>
-        <p>UID: {uid}</p>
-        Firebase Presense Demo
-        {photoURL && <Avatar photoURL={photoURL} />}
-        {!user && <LoginForm />}
-        {user && <LogoutBtn />}
-        <SayHello name="Jamie was here" />
+        <h1 className=" text-4xl text-center">Firebase Presence Demo</h1>
       </header>
+
+      <div>
+        <div className="flex flex-col items-center mt-16">
+          <p>UID: {uid}</p>
+
+          {photoURL && <Avatar photoURL={photoURL} />}
+          {!user && <LoginForm />}
+          {user && <LogoutBtn />}
+          <SayHello name="Jamie was here" />
+        </div>
+      </div>
     </div>
   );
 }
