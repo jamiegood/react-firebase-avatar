@@ -8,10 +8,18 @@ import LoginForm from "./LoginForm";
 import LogoutBtn from "./LogoutBtn";
 import Avatar from "./Avatar";
 
+// type Avatar = {} | null;
+
+type User = {
+  uid: string;
+  photoURL?: string | null | undefined;
+  displayName?: string;
+};
 function App() {
-  const user = auth.currentUser;
+  // const user = auth.currentUser;
   const [uid, setUid] = useState("");
   const [photoURL, setPhotoURL] = useState<string | null>("");
+  const [user, setUser] = useState<User>({} as User);
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -20,6 +28,10 @@ function App() {
       console.log("user signed In");
       setUid(uid);
       setPhotoURL(user.photoURL);
+      setUser({ uid: user.uid, photoURL: user.photoURL });
+      // avatar = {
+
+      // }
     } else {
       // User is signed out
       console.log("user signed out");
@@ -40,7 +52,7 @@ function App() {
         <div className="flex flex-col items-center mt-16">
           <p>UID: {uid}</p>
 
-          {photoURL && <Avatar photoURL={photoURL} />}
+          {photoURL && <Avatar avatar={{ userId: user.uid, photoURL: user?.photoURL, username: user.displayName }} />}
           {!user && <LoginForm />}
           {user && <LogoutBtn />}
           <SayHello name="Jamie was here" />
