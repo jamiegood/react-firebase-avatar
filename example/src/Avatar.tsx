@@ -1,5 +1,5 @@
-import { useState } from "react";
-// import { checkIfUserOnline } from 'firebase/firebasePresence';
+import { useEffect, useState } from "react";
+import { checkIfUserOnline, initFirebasePresence } from "./firebase/firebasePresence";
 
 const avatarSize = "h-11 w-11 sm:h-14 sm:w-14";
 const avatarWidth = 100;
@@ -9,15 +9,21 @@ interface Props {
   avatar: { photoURL?: string | null | undefined; username?: string; userId: string };
 }
 const Avatar: React.FC<Props> = ({ avatar }) => {
-  const [isOnline, setIsOnline] = useState(false);
-  //if (props.userId) checkIfUserOnline(props.userId, setIsOnline);
+  console.log(avatar);
+  const [isOnline, setIsOnline] = useState(true);
+  if (avatar.userId) checkIfUserOnline(avatar.userId, setIsOnline);
 
+  useEffect(() => {
+    initFirebasePresence();
+  }, []);
   let dimensions = avatarSize;
   let width = avatarWidth;
   let height = avatarHeight;
 
   return (
     <div className="relative cursor-pointer">
+      {" "}
+      online:: {isOnline}
       {avatar.photoURL && (
         <a href={`${avatar.photoURL}`}>
           <div className={`${dimensions} rounded-full overflow-hidden hover:ring-4 hover:ring-primary-500 duration-200`}>

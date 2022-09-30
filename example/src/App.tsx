@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useState } from "react";
@@ -19,28 +19,34 @@ function App() {
   // const user = auth.currentUser;
   const [uid, setUid] = useState("");
   const [photoURL, setPhotoURL] = useState<string | null>("");
+  //const [auser, setAUser] = useState<AUser>({} as AUser);
   const [user, setUser] = useState<User>({} as User);
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const uid = user.uid;
-      console.log(user, uid);
-      console.log("user signed In");
-      setUid(uid);
-      setPhotoURL(user.photoURL);
-      setUser({ uid: user.uid, photoURL: user.photoURL });
-      // avatar = {
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      console.log(user);
+      if (user) {
+        const uid = user.uid;
+        console.log(user, uid);
+        console.log("user signed In");
+        setUid(uid);
+        setPhotoURL(user.photoURL);
+        console.log({ uid: user.uid, photoURL: user.photoURL });
+        setUser({ uid: user.uid, photoURL: user.photoURL });
 
-      // }
-    } else {
-      // User is signed out
-      console.log("user signed out");
-      setUid("");
-      setPhotoURL("");
+        // avatar = {
 
-      // ...
-    }
-  });
+        // }
+      } else {
+        // User is signed out
+        console.log("user signed out");
+        // setUid("");
+        // setPhotoURL("");
+
+        // ...
+      }
+    });
+  }, []);
 
   return (
     <div className="App">
