@@ -20,7 +20,7 @@ function App() {
   const [uid, setUid] = useState("");
   const [photoURL, setPhotoURL] = useState<string | null>("");
   //const [auser, setAUser] = useState<AUser>({} as AUser);
-  const [user, setUser] = useState<User>({} as User);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -57,8 +57,9 @@ function App() {
       <div>
         <div className="flex flex-col items-center mt-16">
           <p>UID: {uid}</p>
+          <p>user: {user?.uid}</p>
 
-          {photoURL && <Avatar avatar={{ userId: user.uid, photoURL: user?.photoURL, username: user.displayName }} />}
+          {user && photoURL && <Avatar avatar={{ userId: user.uid, photoURL: user?.photoURL, username: user.displayName }} />}
           {!user && <LoginForm />}
           {user && <LogoutBtn />}
           <SayHello name="Jamie was here" />

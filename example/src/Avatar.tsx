@@ -11,11 +11,11 @@ interface Props {
 const Avatar: React.FC<Props> = ({ avatar }) => {
   console.log(avatar);
   const [isOnline, setIsOnline] = useState(true);
-  if (avatar.userId) checkIfUserOnline(avatar.userId, setIsOnline);
 
   useEffect(() => {
     initFirebasePresence();
-  }, []);
+    if (avatar.userId) checkIfUserOnline(avatar.userId, setIsOnline);
+  }, [avatar]);
   let dimensions = avatarSize;
   let width = avatarWidth;
   let height = avatarHeight;
