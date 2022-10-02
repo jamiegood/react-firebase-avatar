@@ -3,12 +3,12 @@ import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useState } from "react";
 import "./index.css";
-import SayHello from "typescript-react-test";
 import LoginForm from "./LoginForm";
 import LogoutBtn from "./LogoutBtn";
-import Avatar from "./Avatar";
 
-// type Avatar = {} | null;
+// Initialise your firebase with config
+import { firebaseApp } from "./firebase";
+import Avatar from "typescript-react-test";
 
 type User = {
   uid: string;
@@ -16,34 +16,14 @@ type User = {
   displayName?: string;
 };
 function App() {
-  // const user = auth.currentUser;
-  const [uid, setUid] = useState("");
-  const [photoURL, setPhotoURL] = useState<string | null>("");
-  //const [auser, setAUser] = useState<AUser>({} as AUser);
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log(user);
       if (user) {
-        const uid = user.uid;
-        console.log(user, uid);
-        console.log("user signed In");
-        setUid(uid);
-        setPhotoURL(user.photoURL);
-        console.log({ uid: user.uid, photoURL: user.photoURL });
-        setUser({ uid: user.uid, photoURL: user.photoURL });
-
-        // avatar = {
-
-        // }
+        setUser({ uid: user.uid, photoURL: user?.photoURL });
       } else {
-        // User is signed out
-        console.log("user signed out");
-        // setUid("");
-        // setPhotoURL("");
-
-        // ...
+        setUser(null);
       }
     });
   }, []);
@@ -56,13 +36,8 @@ function App() {
 
       <div>
         <div className="flex flex-col items-center mt-16">
-          <p>UID: {uid}</p>
-          <p>user: {user?.uid}</p>
-
-          {user && photoURL && <Avatar avatar={{ userId: user.uid, photoURL: user?.photoURL, username: user.displayName }} />}
-          {!user && <LoginForm />}
-          {user && <LogoutBtn />}
-          <SayHello name="Jamie was here" />
+          {user && <Avatar avatar={{ userId: user.uid, photoURL: user?.photoURL, username: user.displayName }} />}
+          {user ? <LogoutBtn /> : <LoginForm />}
         </div>
       </div>
     </div>

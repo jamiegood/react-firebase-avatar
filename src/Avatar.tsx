@@ -1,21 +1,21 @@
+import React from "react";
 import { useEffect, useState } from "react";
-import { checkIfUserOnline, initFirebasePresence } from "./firebase/firebasePresence";
+// import { checkIfUserOnline, initFirebasePresence } from "./firebasePresence";
 
 interface Props {
   avatar: { photoURL?: string | null | undefined; username?: string; userId: string; width?: string; height?: string; avatarSize?: string };
 }
 
-const Avatar: React.FC<Props> = ({ avatar }) => {
-  const [isOnline, setIsOnline] = useState(true);
+const Avatar: React.FC<Props> = ({ avatar }): JSX.Element => {
+  // const [isOnline, setIsOnline] = useState(true);
+  const [isOnline] = useState(true);
   const avatarDimensions = avatar?.avatarSize || "h-11 w-11 sm:h-14 sm:w-14";
   const imageWidth = avatar?.width || 100;
   const imageHeight = avatar?.height || 100;
-
   useEffect(() => {
-    initFirebasePresence();
-    if (avatar?.userId) checkIfUserOnline(avatar.userId, setIsOnline);
+    // initFirebasePresence();
+    // if (avatar?.userId) checkIfUserOnline(avatar.userId, setIsOnline);
   }, [avatar]);
-
   return (
     <div className="relative cursor-pointer">
       {avatar.photoURL && (

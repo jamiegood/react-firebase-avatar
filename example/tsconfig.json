@@ -16,5 +16,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "../src/LoginForm.tsx"]
+  "include": ["src", "../src/LoginForm.tsx", "../src/firebasePresence.js"]
 }

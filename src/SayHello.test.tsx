@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 
 import * as React from "react";
 import { render, screen } from "@testing-library/react";
-import SayHello from "./index";
+import SayHello from "./SayHello";
 
 describe("<SayHello />", () => {
   test("should have the text jamie in a div", async () => {
