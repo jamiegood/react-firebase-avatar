@@ -7,8 +7,11 @@ import LoginForm from "./LoginForm";
 import LogoutBtn from "./LogoutBtn";
 
 // Initialise your firebase with config
-import { firebaseApp } from "./firebase";
-import Avatar from "typescript-react-test";
+import { firebaseApp, firebaseConfig } from "./firebase";
+import { Avatar, FirebaseInit } from "typescript-react-test";
+//import Avatar from "./Avatar";
+
+FirebaseInit(firebaseConfig);
 
 type User = {
   uid: string;
@@ -37,6 +40,7 @@ function App() {
       <div>
         <div className="flex flex-col items-center mt-16">
           {user && <Avatar avatar={{ userId: user.uid, photoURL: user?.photoURL, username: user.displayName }} />}
+          {/* {user && <Avatar avatar={{ userId: "123" }} />} */}
           {user ? <LogoutBtn /> : <LoginForm />}
         </div>
       </div>

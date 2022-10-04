@@ -1,23 +1,45 @@
-import React from "react";
-import { useEffect, useState } from "react";
-// import { checkIfUserOnline, initFirebasePresence } from "./firebasePresence";
+import React, { useState, useEffect } from "react";
+import { checkIfUserOnline, initFirebasePresence } from "./firebasePresence";
+//import { initializeApp } from "firebase/app";
 
 interface Props {
-  avatar: { photoURL?: string | null | undefined; username?: string; userId: string; width?: string; height?: string; avatarSize?: string };
+  avatar: {
+    photoURL?: string | null | undefined;
+    username?: string;
+    userId?: string;
+    width?: string;
+    height?: string;
+    avatarSize?: string;
+  };
 }
 
-const Avatar: React.FC<Props> = ({ avatar }): JSX.Element => {
-  // const [isOnline, setIsOnline] = useState(true);
-  const [isOnline] = useState(true);
+let thisfirebaseConfig: any;
+
+const Avatar: React.FC<Props> = ({ avatar }) => {
+  const [isOnline, setIsOnline] = useState(false);
   const avatarDimensions = avatar?.avatarSize || "h-11 w-11 sm:h-14 sm:w-14";
   const imageWidth = avatar?.width || 100;
   const imageHeight = avatar?.height || 100;
+  //const isOnline = true;
   useEffect(() => {
-    // initFirebasePresence();
-    // if (avatar?.userId) checkIfUserOnline(avatar.userId, setIsOnline);
-  }, [avatar]);
+    if (thisfirebaseConfig) {
+      console.log("Firebase: ", thisfirebaseConfig);
+      initFirebasePresence(thisfirebaseConfig);
+      if (avatar?.userId) {
+        console.log("avatar uiser is null:", avatar?.userId);
+
+        checkIfUserOnline(avatar.userId, setIsOnline);
+      } else {
+        console.log("avatar uiser is null");
+      }
+    } else {
+      console.log("firebase Config missing ");
+    }
+  }, []);
+
   return (
     <div className="relative cursor-pointer">
+      {avatar?.userId}
       {avatar.photoURL && (
         <a href={`${avatar.photoURL}`}>
           <div className={`${avatarDimensions} rounded-full overflow-hidden hover:ring-4 hover:ring-primary-500 duration-200`}>
@@ -43,4 +65,11 @@ const Avatar: React.FC<Props> = ({ avatar }): JSX.Element => {
   );
 };
 
-export default Avatar;
+const FirebaseInit = (firebaseConfig: any) => {
+  console.log("firebaseConfig", firebaseConfig);
+
+  console.log(firebaseConfig);
+  thisfirebaseConfig = firebaseConfig;
+  //return firebaseApp;
+};
+export { Avatar, FirebaseInit };

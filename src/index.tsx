@@ -10,6 +10,6 @@
 
 // export default SayHello;
 
-import Avatar from "./Avatar";
+import { Avatar, FirebaseInit } from "./Avatar";
 
-export default Avatar;
+export { Avatar, FirebaseInit };

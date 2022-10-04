@@ -1,2 +1,2 @@
-import Avatar from "./Avatar";
-export default Avatar;
+import { Avatar, FirebaseInit } from "./Avatar";
+export { Avatar, FirebaseInit };
