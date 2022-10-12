@@ -6,7 +6,7 @@ interface Props {
   avatar: {
     photoURL?: string | null | undefined;
     username?: string;
-    userId?: string;
+    userId?: string | null | undefined;
     width?: string;
     height?: string;
     avatarSize?: string;
@@ -20,22 +20,25 @@ const Avatar: React.FC<Props> = ({ avatar }) => {
   const avatarDimensions = avatar?.avatarSize || "h-11 w-11 sm:h-14 sm:w-14";
   const imageWidth = avatar?.width || 100;
   const imageHeight = avatar?.height || 100;
+
+  initFirebasePresence(thisfirebaseConfig);
+  console.log("avatar component");
+
   //const isOnline = true;
   useEffect(() => {
     if (thisfirebaseConfig) {
       console.log("Firebase: ", thisfirebaseConfig);
-      initFirebasePresence(thisfirebaseConfig);
-      if (avatar?.userId) {
-        console.log("avatar uiser is null:", avatar?.userId);
+      if (avatar?.userId) checkIfUserOnline(avatar?.userId, setIsOnline, isOnline);
 
-        checkIfUserOnline(avatar.userId, setIsOnline);
+      if (avatar?.userId) {
+        console.log("avatar uiser is:", avatar?.userId);
       } else {
         console.log("avatar uiser is null");
       }
     } else {
       console.log("firebase Config missing ");
     }
-  }, []);
+  }, [avatar, setIsOnline]);
 
   return (
     <div className="relative cursor-pointer">

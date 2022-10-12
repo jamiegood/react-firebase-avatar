@@ -56,13 +56,18 @@ async function checkIfIAmOnline(callback: any) {
     return callback("false");
   }
 }
-function checkIfUserOnline(uid: string, callback: any) {
+function checkIfUserOnline(uid: string, callback: any, isOnline: any) {
   const userStatusDatabaseRef = ref(database, "/status/" + uid);
   onValue(userStatusDatabaseRef, (snapshot: any) => {
     const data = snapshot.val();
     console.log("data status userStatusDatabaseRef:: ", data?.state);
-    const isOnline = data?.state === "online";
-    callback(isOnline);
+    const currentOnlineStatus = data?.state === "online";
+
+    if (isOnline === currentOnlineStatus) {
+      console.log("still online");
+    } else {
+      callback(currentOnlineStatus);
+    }
   });
 }
 

@@ -3,7 +3,7 @@ interface Props {
     avatar: {
         photoURL?: string | null | undefined;
         username?: string;
-        userId?: string;
+        userId?: string | null | undefined;
         width?: string;
         height?: string;
         avatarSize?: string;
